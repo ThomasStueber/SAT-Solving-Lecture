@@ -1,0 +1,82 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{eurosym}
+\usepackage{algorithm2e}
+\usepackage{ stmaryrd }
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{trees,automata,arrows,shapes}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath, amsthm}
+\usepackage{listings}
+\usepackage{amsfonts, amssymb}
+\usepackage{algorithm2e}
+\usepackage{textcomp}
+\usepackage{bussproofs}
+\usepackage{rotating}
+\usepackage{caption}
+\usepackage{listings}% http://ctan.org/pkg/listings
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+\renewcommand*{\proofname}{Beweis}
+
+%opening
+\title{}
+\author{}
+
+\begin{document}
+\noindent Thomas Stüber (3750920) \hfill Tübingen, den  21. Oktober 2017\\
+\noindent Benjamin Coban () \\
+\begin{center}
+\Large Übungen zur Vorlesung  \\ ``SAT-Solving und Anwendungen'' \\
+\vspace*{2mm}
+\large (Abgabe 2) \\
+\vspace*{2mm}
+\end{center}
+
+\noindent\textbf{Aufgabe 2.1}\\
+\begin{enumerate}
+\item Jede einzelne Klausel (Minterm) in die kanonischen DNF von $exactlyOne(X)$ drückt aus, dass alle Variablen auf 0 gesetzt sind bis auf eine, die auf 1 gesetzt sein soll, hat also die Form 
+\begin{align*}
+x_j \wedge \bigwedge_{i=1, i \neq j}^n \neg x_i 
+\end{align*}
+wobei $x_j$ die Variable ist die auf 1 gesetzt werden soll. Eine Disjunktion dieser Klauseln, für jede Variable eine, drückt also aus, dass genau eine Variable 1 sein soll. Dies entspricht dann auch der kanonischen DNF für $exactlyOne(X)$:
+\begin{align*}
+\bigvee_{j=1}^n \left( x_j \wedge \bigwedge_{i=1, i \neq j}^n \neg x_i \right)
+\end{align*}
+Die Anzahl der Klauseln (Minterme) in der kanonischen DNF ist also bei $n$ Variablen $n$. Die Anzahl der mindestens nötigen Minterme ist ebenfalls n:
+\begin{proof}
+Sei $\phi$ eine DNF für $exactlyOne(X)$. O.b.d.A. enthalte $\phi$ keine Klauseln die unerfüllbar sind, wenn doch entferne sie. Jede Klausel $\phi$ muss alle Variablen aus $X$ negiert oder unnegiert enthalten. Angenommen dem wäre nicht so. Dann könnte die entsprechende Klausel, da sie ja erfüllbar ist per Voraussetzung, mit einer Belegung erfüllt werden, wobei diese Belegung alle nicht vorkommenden Variablen mit 1 belegt. Dadurch wäre $\phi$ schon erfüllt durch eine Belegung, die mehr als eine Variable auf 1 setzt und $\phi$ wäre keine DNF für $exactlyOne(X)$, Widerspruch. Also kommen in allen Klauseln von $\phi$ alle Variablen aus $X$ vor und das pro Klausel entweder negiert oder nicht negiert, da die Klausel sonst unerfüllbar wäre und solche Klauseln o.b.d.A. nicht in $\phi$ vorkommen. Wären alle Variablen in einer Klausel negiert könnte diese durch die Belegung erfüllt werden, die alle Variablen auf 0 setzt, Widerspruch zur Annahme, $\phi$ wäre eine DNF für $exactlyOne(X)$. Wäre mehr als eine Variable unnegiert in einer Klausel könnte diese, und damit $\phi$, von einer Belegung erfüllt werden, die mehr als eine Variable aus $X$ auf 1 setzt, Widerspruch. Also haben alle Klauseln von $\phi$ die oben angebene Form wie in der kanonischen DNF. Angenommen $\phi$ hätte weniger als $n$ Klauseln. Dann würde für ein $1 \leq j \leq n$ die Klausel 
+\begin{align*}
+x_j \wedge \bigwedge_{i=1, i \neq j}^n \neg x_i 
+\end{align*}  
+fehlen, und alle anderen Klauseln erlauben nur exakt eine Variable auf 1 zu setzen. Damit würde die Belegung, die nur $x_j$ auf 1 setzt $\phi$ nicht erfüllen, Widerspruch. Also hat $\phi$ doch mindestens $n$ Klauseln.
+\end{proof}
+Der Beweis zeigt, dass $n$ schon die kleinste mögliche Zahl an Klauseln für eine solche Formel ist, mehr sogar: der Beweis zeigt, dass die kanonische DNF die einzige DNF ist die keine unnötigen Klauseln enthält. 
+\end{enumerate}
+
+
+\noindent\textbf{Aufgabe 2.2}\\
+Ganz offensichtlich kann dieses Verfahren nicht korrekt sein. Das prüfen, ob ein Minterm erfüllbar ist ist in linearer Zeit möglich und eine Formel enthält nur linear viele Minterme. Außerdem besitzt das Verfahren nach Tseitin polynomielle Laufzeit. Damit wäre, wenn das Verfahren hier korrekt wäre $P = NP$ und wir könnten uns diese Vorlesung sparen. Da das Verfahren für alle $\phi$ gelten müsste um korrekt zu sein wie es hier formuliert ist, genügt ein Gegenbeispiel. Betrachte
+\begin{align*}
+\phi = \neg ((x \vee \neg x) \vee (x \wedge \neg x))
+\end{align*} 
+Dann ist 
+\begin{align*}
+\neg \phi \equiv (x \vee \neg x) \vee (x \wedge \neg x)
+\end{align*}
+Damit ist 
+\begin{align*}
+\omega = Tseitin(\neg \phi) = ((x \vee \neg x) \vee t) \wedge (\neg t \vee x) \wedge (\neg t \vee \neg x) \wedge (t \vee \neg x \vee x)
+\end{align*}
+mit der neuen Variable t. Jetzt ist nach dem Verfahren aus der Aufgabe:
+\begin{align*}
+\neg \omega = \neg((x \vee \neg x) \vee t) \vee \neg(\neg t \vee x) \vee \neg(\neg t \vee \neg x) \vee \neg(t \vee \neg x \vee x)
+\end{align*}
+Die negierte zweite Klausel ist erfüllbar mit t auf 1 gesetzt und $x$ auf 0, damit ist $\neg \omega$ erfüllbar, aber $\phi$ war offenbar eine Kontradiktion. Da es eine Formel gibt, für die das Verfahren fehlschlägt, ist es im allgemeinen nicht richtig.
+\end{document}
