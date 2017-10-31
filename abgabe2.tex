@@ -3,7 +3,7 @@
 \usepackage{ngerman}
 \usepackage{eurosym}
 \usepackage{algorithm2e}
-\usepackage{ stmaryrd }
+%\usepackage{ stmaryrd }
 \usepackage{enumerate}
 \usepackage{tikz}
 \usetikzlibrary{trees,automata,arrows,shapes}
@@ -31,7 +31,7 @@
 
 \begin{document}
 \noindent Thomas Stüber (3750920) \hfill Tübingen, den  21. Oktober 2017\\
-\noindent Benjamin Coban () \\
+\noindent Benjamin Coban (3526251) \\
 \begin{center}
 \Large Übungen zur Vorlesung  \\ ``SAT-Solving und Anwendungen'' \\
 \vspace*{2mm}
@@ -40,7 +40,7 @@
 \end{center}
 
 \noindent\textbf{Aufgabe 2.1}\\
-\begin{enumerate}
+\begin{enumerate}[a)]
 \item Jede einzelne Klausel (Minterm) in die kanonischen DNF von $exactlyOne(X)$ drückt aus, dass alle Variablen auf 0 gesetzt sind bis auf eine, die auf 1 gesetzt sein soll, hat also die Form 
 \begin{align*}
 x_j \wedge \bigwedge_{i=1, i \neq j}^n \neg x_i 
@@ -57,8 +57,74 @@ x_j \wedge \bigwedge_{i=1, i \neq j}^n \neg x_i
 \end{align*}  
 fehlen, und alle anderen Klauseln erlauben nur exakt eine Variable auf 1 zu setzen. Damit würde die Belegung, die nur $x_j$ auf 1 setzt $\phi$ nicht erfüllen, Widerspruch. Also hat $\phi$ doch mindestens $n$ Klauseln.
 \end{proof}
-Der Beweis zeigt, dass $n$ schon die kleinste mögliche Zahl an Klauseln für eine solche Formel ist, mehr sogar: der Beweis zeigt, dass die kanonische DNF die einzige DNF ist die keine unnötigen Klauseln enthält. 
+Der Beweis zeigt, dass $n$ schon die kleinste mögliche Zahl an Klauseln für eine solche Formel ist, mehr sogar: der Beweis zeigt, dass die kanonische DNF die einzige DNF ist die keine unnötigen Klauseln enthält.
+\item Anzugeben ist eine boolesche Funktion, welche 14 Variablen beinhaltet und mit nicht weniger als 120 Minterme in der DNF-Darstellung zurechtkommt. Zur Konstruktion einer solchen Funktion nutzen wir das KV-Diagramm, bekannt aus Einführung in die technische Informatik.\\
+\underline{Konstruktion:} Wir werden 14 Variablen verwenden, um 4 KV-Diagramme zu erstellen, welche nicht minimierbar sind. Des weiteren werden wir ein weiteres KV-Diagramm erstellen, welches über die Teilformeln, resultierend aus den ersten vier KV-Diagrammen ist, enthält. Wir weisen folgende Variablen Formeln zu, welche dann über ein KV-Diagramm repräsentiert werden.
+\begin{align*}
+    A_{\text{var}} &= \{x_1,x_2,x_3,x_4\}\\
+    B_{\text{var}} &= \{x_5,x_6,x_7,x_8\}\\
+    C_{\text{var}} &= \{x_9,x_{10},x_{11},x_{12}\}\\
+    D_{\text{var}} &= \{x_{13},x_{14}\}
+\end{align*}
+Wir wissen - beinhaltet eine KV-Diagramm alternierende Belegung (Schachbrett), lässt sie sich nicht weiter in DNF minimieren. Wähle also folgendes Diagrammschema:\\$A :=$
+\begin{tabular}{|c|c|c|c|c|c|}
+	\hline & $x_1$ & $x_1$ & $\neg x_1$ & $\neg x_1$ & \\
+	\hline $x_2$ & 0 & 0 & 0 & 0 & $x_3$\\
+	\hline $x_2$ &0 & 1 & 0 & 0 & $\neg x_3$\\
+	\hline $\neg x_2$ & 1 & 0 & 1 & 0 & $\neg x_3$\\
+	\hline $\neg x_2$& 0 & 0 & 0 & 0 & $x_3$\\
+	\hline &$x_4$ &$\neg x_4$ & $\neg x_4$& $x_4$&\\
+	\hline
+\end{tabular}\\
+$B :=$
+\begin{tabular}{|c|c|c|c|c|c|}
+	\hline & $x_5$ & $x_5$ & $\neg x_5$ & $\neg x_5$ & \\
+	\hline $x_6$ & 0 & 0 & 1 & 0 & $x_7$\\
+	\hline $x_6$ &0 & 1 & 0 & 0 & $\neg x_7$\\
+	\hline $\neg x_6$ & 1 & 0 & 1 & 0 & $\neg x_7$\\
+	\hline $\neg x_6$& 0 & 0 & 0 & 0 & $x_7$\\
+	\hline &$x_8$ &$\neg x_8$ & $\neg x_8$& $x_8$&\\
+	\hline
+\end{tabular}\\
+$C :=$
+\begin{tabular}{|c|c|c|c|c|c|}
+	\hline & $x_9$ & $x_9$ & $\neg x_9$ & $\neg x_9$ & \\
+	\hline $x_{10}$ & 1 & 0 & 1 & 0 & $x_{11}$\\
+	\hline $x_{10}$ &0 & 1 & 0 & 0 & $\neg x_{11}$\\
+	\hline $\neg x_{10}$ & 1 & 0 & 1 & 0 & $\neg x_{11}$\\
+	\hline $\neg x_{10}$& 0 & 0 & 0 & 0 & $x_{11}$\\
+	\hline &$x_{12}$ &$\neg x_{12}$ & $\neg x_{12}$& $x_{12}$&\\
+	\hline
+\end{tabular}\\
+$D :=$ 
+\begin{tabular}{|c|c|c|}
+	\hline & $x_{13}$ & $\neg x_{13}$ \\
+	\hline $x_{14}$ & 1 & 0\\
+	\hline $\neg x_{14}$ &0 & 1 \\
+	\hline
+\end{tabular}\\
+Die so entstehenden Teilformeln sind also nicht reduzierbar es gilt für $D$, dass sie 2 Minterme hat, $A$, dass die 3 hat, $B$ 4 und $C$ 5. Betrachte nun $f$:\\
+$f(x_1,...,x_{14}) := A\wedge B\wedge C\wedge D$
+%\begin{tabular}{|c|c|c|c|c|c|}
+%	\hline & $A$ & $A$ & $\neg A$ & $\neg A$ & \\
+%	\hline $B$ & 1 & 0 & 1 & 0 & $C$\\
+%	\hline $B$ &0 & 1 & 0 & 1 & $\neg C$\\
+%	\hline $\neg B$ & 1 & 0 & 1 & 0 & $\neg C$\\
+%	\hline $\neg B$& 0 & 1 & 0 & 1 & $C$\\
+%	\hline &$D$ &$\neg D$ & $\neg D$& $D$&\\
+%	\hline
+%\end{tabular}\\
+Betrachte die Anzahl der Minterme von $f$: $A$ besitzt 3, $B$ 4 Minterme. Das Distributivgesetz sorgt dafür, dass die Anzahl der Minterme bei einer Konjunktion miteinenander multipliziert werden, ersichtlich durch folgendes Beispiel: Hier werden die Anzahl der Minterme illustriert durch die Betragstriche.
+\begin{align*}
+|A \wedge B| &= |\left(A_1 \vee A_2 \vee A_3\right) \wedge B|\\
+&= |A_1B \vee A_2B \vee A_3B|\\
+&= |A_1(B_1\vee B_2 \vee B_3 \vee B_4) \vee A_2(B_1\vee B_2 \vee B_3 \vee B_4) \vee A_3(B_1\vee B_2 \vee B_3 \vee B_4)|\\
+&= |A| \cdot |B| = 3 \cdot 4 = 12
+\end{align*}
+So gilt, dass $f$ genau $2\cdot3\cdot4\cdot5=120$ Minterme besitzt. 
+
 \end{enumerate}
+
 
 
 \noindent\textbf{Aufgabe 2.2}\\
