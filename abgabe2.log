@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.5.25)  31 OCT 2017 18:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.5.25)  31 OCT 2017 18:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1233,8 +1233,13 @@ Overfull \hbox (32.50986pt too wide) in paragraph at lines 123--123
 [] 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--149
+
+ []
+
 [3]
-Overfull \hbox (5696.6883pt too wide) in paragraph at lines 194--195
+Overfull \hbox (5696.6883pt too wide) in paragraph at lines 193--194
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -1248,7 +1253,7 @@ Overfull \hbox (5696.6883pt too wide) in paragraph at lines 194--195
  []
 
 
-Overfull \hbox (5772.28815pt too wide) in paragraph at lines 195--196
+Overfull \hbox (5772.28815pt too wide) in paragraph at lines 194--195
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -1260,7 +1265,7 @@ Overfull \hbox (5772.28815pt too wide) in paragraph at lines 195--196
  []
 
 
-Overfull \hbox (1784.39587pt too wide) in paragraph at lines 205--206
+Overfull \hbox (1784.39587pt too wide) in paragraph at lines 204--205
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -1268,14 +1273,14 @@ Overfull \hbox (1784.39587pt too wide) in paragraph at lines 205--206
  []
 
 
-Overfull \hbox (1204.797pt too wide) in paragraph at lines 206--207
+Overfull \hbox (1204.797pt too wide) in paragraph at lines 205--206
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (4581.59045pt too wide) in paragraph at lines 208--209
+Overfull \hbox (4581.59045pt too wide) in paragraph at lines 207--208
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -1286,12 +1291,12 @@ Overfull \hbox (4581.59045pt too wide) in paragraph at lines 208--209
  []
 
 
-Overfull \hbox (152.69904pt too wide) in paragraph at lines 217--218
+Overfull \hbox (152.69904pt too wide) in paragraph at lines 216--217
 [][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (2193.89508pt too wide) in paragraph at lines 218--219
+Overfull \hbox (2193.89508pt too wide) in paragraph at lines 217--218
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -1299,7 +1304,7 @@ Overfull \hbox (2193.89508pt too wide) in paragraph at lines 218--219
  []
 
 [4]
-Overfull \hbox (2678.99414pt too wide) in paragraph at lines 219--220
+Overfull \hbox (2678.99414pt too wide) in paragraph at lines 218--219
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -1307,20 +1312,20 @@ Overfull \hbox (2678.99414pt too wide) in paragraph at lines 219--220
  []
 
 
-Overfull \hbox (1066.19727pt too wide) in paragraph at lines 220--221
+Overfull \hbox (1066.19727pt too wide) in paragraph at lines 219--220
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (1778.09589pt too wide) in paragraph at lines 230--231
+Overfull \hbox (1778.09589pt too wide) in paragraph at lines 229--230
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (8745.88239pt too wide) in paragraph at lines 232--233
+Overfull \hbox (8745.88239pt too wide) in paragraph at lines 231--232
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -1335,7 +1340,7 @@ Overfull \hbox (8745.88239pt too wide) in paragraph at lines 232--233
  []
 
 
-Overfull \hbox (13760.67267pt too wide) in paragraph at lines 242--243
+Overfull \hbox (13760.67267pt too wide) in paragraph at lines 241--242
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -1363,7 +1368,7 @@ Overfull \hbox (13760.67267pt too wide) in paragraph at lines 242--243
 ! Dimension too large.
 \lsthk@InitVarsEOL ->\ifdim \lst@currlwidth 
                                             >\lst@maxwidth \global \lst@maxw...
-l.243 ...-1013, -1014, -1016, -1019, -1020, -1021]
+l.242 ...-1013, -1014, -1016, -1019, -1020, -1021]
                                                   
 I can't work with sizes bigger than about 19 feet.
 Continue and I'll use the largest value I can.
@@ -1371,13 +1376,13 @@ Continue and I'll use the largest value I can.
 ! Dimension too large.
 <recently read> \lst@currlwidth 
                                 
-l.243 ...-1013, -1014, -1016, -1019, -1020, -1021]
+l.242 ...-1013, -1014, -1016, -1019, -1020, -1021]
                                                   
 I can't work with sizes bigger than about 19 feet.
 Continue and I'll use the largest value I can.
 
 
-Overfull \hbox (17868.26471pt too wide) in paragraph at lines 243--244
+Overfull \hbox (17868.26471pt too wide) in paragraph at lines 242--243
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -1428,7 +1433,7 @@ fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmtt10.pfb>
-Output written on abgabe2.pdf (5 pages, 143563 bytes).
+Output written on abgabe2.pdf (5 pages, 143566 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  48 compressed objects within 1 object stream
