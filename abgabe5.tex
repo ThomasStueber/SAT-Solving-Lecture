@@ -1,0 +1,44 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{eurosym}
+\usepackage{algorithm2e}
+\usepackage{ stmaryrd }
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{trees,automata,arrows,shapes}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath, amsthm}
+\usepackage{listings}
+\usepackage{amsfonts, amssymb}
+\usepackage{algorithm2e}
+\usepackage{textcomp}
+\usepackage{bussproofs}
+\usepackage{rotating}
+\usepackage{caption}
+\usepackage{listings}% http://ctan.org/pkg/listings
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+\renewcommand*{\proofname}{Beweis}
+
+%opening
+\title{}
+\author{}
+
+\begin{document}
+\noindent Thomas Stüber (3750920) \hfill Tübingen, den  21. Oktober 2017\\
+\noindent Benjamin Coban () \\
+\begin{center}
+\Large Übungen zur Vorlesung  \\ ``SAT-Solving und Anwendungen'' \\
+\vspace*{2mm}
+\large (Abgabe 5) \\
+\vspace*{2mm}
+\end{center}
+
+\noindent\textbf{Aufgabe 5.2}\\\smallskip
+Wenn die Aufgabenstellung sich auf Unsatisfiable Cores im allgemeinen bezieht anstatt auf die, die durch den Algorithmus des letzten Blattes berechnet werden, ist die Antwort einfach nein, da jede unerfüllbare Formel per Definition ein Unsatifiable Core ist, dieser aber nicht minimal sein muss. Betrachte dazu $\phi = \{\{x\}, \{\neg x\}, \{y\}\}$. Es gilt natürlich $\phi \subseteq \phi$ aber $\phi$ ist kein MUS, da $\{\{x\}, \{\neg x\}\} \subsetneq$ ebenfalls unerfüllbar ist. Wenn hingegen so ein Unsatifiable Core wie durch den Algorithmus auf dem letzten Blatt berechnet gemeint ist, ist die Antwort Ja. Angenommen man könnte eine Klausel aus dem Core entfernen und die entstehende Menge wäre immer noch unerfüllbar. Dann würde entweder die Konfliktklausel fehlen, so dass es in der entstandenen Menge keinen Konflikt gäbe und sie erfüllbar wäre (im Verlauf des Algorithmus werden die Variablen nach und nach belegt und erst durch die Konflikt-Klausel kann die Belegung nicht auf weitere Klauseln ausgedehnt werden, so dass diese erfüllt werden, alle bis dahin betrachten Klauseln sind dann durch die aktuelle Belegung erfüllt), oder es würde ein Reason-Clause fehlen die zu der Reason-Clause des Konfliktes geführt hat. Ohne die Klausel fehlt der Zwang die entsprechende Variable $v$ so zu belegen wie für den Konflikt nötig. Die Variable könnte also komplementär Belegt werden. Die Reason-Klausel der nächsten Variable, die per Up belegt wurde weil $v$ auf den ursprünglichen Wert gesetzt war, ist nun erfüllt durch die komplementäre Belegung von $v$. Die entsprechende Variable $v_2$ kann wieder Komplementär belegt werden. Das Verfahren setzt sich fort bis zur Reason-Klausel des Konflikts. Damit kann eine erfüllende Belegung aus der partiellen Belegung zum Zeitpunkt des Konfliktes konstruiert werden für diese verkleinerte Menge. Jede noch kleinere Teilmenge ist damit auch erfüllbar, da Teilmengen erfüllbarer Mengen mit der selben Belegung auch erfüllt werden (und eventuell noch mehr Belegungen). Also ist der berechnete Core tatsächlich ein MUS.
+\end{document}

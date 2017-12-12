@@ -1,0 +1,241 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{eurosym}
+\usepackage{algorithm2e}
+\usepackage{ stmaryrd }
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{trees,automata,arrows,shapes}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath, amsthm}
+\usepackage{listings}
+\usepackage{amsfonts, amssymb}
+\usepackage{algorithm2e}
+\usepackage{textcomp}
+\usepackage{bussproofs}
+\usepackage{rotating}
+\usepackage{caption}
+\usepackage{listings}% http://ctan.org/pkg/listings
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+\renewcommand*{\proofname}{Beweis}
+
+%opening
+\title{}
+\author{}
+
+\begin{document}
+\noindent Thomas Stüber (3750920) \hfill Tübingen, den  21. Oktober 2017\\
+\noindent Benjamin Coban () \\
+\begin{center}
+\Large Übungen zur Vorlesung  \\ ``SAT-Solving und Anwendungen'' \\
+\vspace*{2mm}
+\large (Abgabe 4) \\
+\vspace*{2mm}
+\end{center}
+
+\noindent\textbf{Aufgabe 4.1}\\\smallskip
+\begin{enumerate}
+\item Die Idee ist hier, dass während dem berechnen der gelernten Klausel jede Klausel aus der original Formel in der Menge OC gespeichert wird, welche dann als Attribut für die gelernte Klausel gesetzt wird. Hierbei muss beachtet werden, dass die Reason-Clauses der einzelnen Variablen selbst gelernte Klauseln sein könnten. Daher wird unterschieden ob die Reason-Clause der jeweiligen Variablen gelernt wurde, in dem Fall werden ihre origClauses hinzugefügt, oder ob es sich um eine Klausel aus der Eingabe handelt, in dem Fall wird die Klausel einfach hinzugefügt. Dies ist nötig, da nur Klauseln aus der Eingabe getrackt werden sollen. Pseudocode:
+\begin{algorithm}[H]
+	\caption{modified analyzeConf(ec,$C$)}
+	\KwIn{an empty clause ec, the set of clauses $C$}
+	\KwOut{backtracking level modified}
+	\If{current decision level $== 0$}{return $-1$}
+	lv = the last assigned variable before the conflict cause;\\
+	reason = the reason of lv;\\
+	newClause = resolve(ec,reason);\\
+	\uIf{ec is learned clause}{
+	$OC = OC \cup ec.originClauses$}
+	\Else{$OC = OC \cup \{ec\}$}
+	\uIf{reason is learned clause}{
+	$OC = OC \cup reason.originClauses$}
+	\Else{$OC = OC \cup \{reason\}$}
+	\While{stop criterion not yet met}{
+		cv = chooseLit(newClause);\\
+		reason = reason of cv;\\
+		newClause = resolve(newClause,reason);\\
+		\uIf{reason = learned clause}{
+		$OC = OC \cup reason.origClauses$}
+	    \Else{$OC = OC \cup \{reason\}$}
+	}
+    newClause.originClauses = OC;\\
+    $C = C\cup \{newClause\}$;\\
+    level = computeBacktrackingLevel(newClause);\\
+    \Return level;
+\end{algorithm}
+
+\item Hier ist die Idee, dass eine Formel nur dann unerfüllbar ist, wenn es einen Konflikt auf Level 0 gibt. Die letzte gelernte Klausel enthält in origClause die beiden Klauseln die sich wiedersprochen haben (bzw. deren origClauses falls diese gelernt waren) und alle Reason-Clauses die zu der gelernten Klausel geführt haben. Damit ist in origClause der gelernten Klausel schon der Grund enthalten, warum eine UP-Variable umbelegt werden müsste (was den Widerspruch darstellt). Nimmt man nun noch alle Reason-Clauses (bzw deren origClauses falls es gelernte Klauseln sind) der Variablen auf Level 0 hinzu erhält man den Grund, warum alle Variablen auf Level 0 durch UP so belegt sein müssen wie sie belegt sind. Zusammen ergibt sich also eine Menge von Klauseln, die unerfüllbar ist, da sie die Klauseln enthält, die festlegen warum eine Variable durch UP so belegt werden muss wie der Algorithmus sie belegt hat, und gleichzeitig die Klauseln enthält, die zu dem Widerspruch geführt haben dass diese Variable umbelegt werden müsste. Pseudocode: \\
+\begin{algorithm}[H]
+	\caption{sat($C$) modified}
+	\KwIn{Clauseset $C$}
+	\KwOut{SAT or (UNSAT,UC)}
+	level = 0;\\
+	$\alpha = \emptyset$;\\
+	\While{true}{
+	UP($C,\alpha$);\\
+	\If{$C$ contains an empty clause}{
+	ec = empty clause;\\
+level = analyzeConf(ec,$C$);\\
+\If{level $== -1$}{
+UC = lastLearnedClause.origClauses;\\
+\ForAll{$(v \mapsto b) \in \alpha$}{
+\uIf{reason(v) is learned clause}{
+	$UC = UC \cup reason(v).origClause$;
+	}
+\Else{$UC = UC \cup \{reason(v)\}$}
+}
+\Return (UNSAT,UC);\\
+
+}
+
+backtrack(level);
+}
+\Else{
+\If{$\alpha \vDash C$}{\Return SAT}
+level++;\\
+choose $x\notin \alpha$;\\
+$\alpha = \alpha \cup \left[x \mapsto 0\right]$;
+
+}
+}
+\end{algorithm}
+\end{enumerate}
+
+
+\noindent\textbf{Aufgabe 4.2}\\\smallskip
+Siehe Quelltext in diesem Archiv, alles relevante wurde kommentiert. 
+
+\noindent\textbf{Aufgabe 4.3}\\\smallskip
+Im folgenden die Ausgabe für die beiden Testformeln, jeweils vor und nach UP:
+\begin{verbatim}
+{ 1 2 -3 }, sat = false, unassigned = 3
+{ 3 4 }, sat = false, unassigned = 2
+{ -1 }, sat = false, unassigned = 1
+{ -2 1 }, sat = false, unassigned = 2
+{ 2 3 -4 }, sat = false, unassigned = 3
+
+
+Variable 1: [OPEN 
+	Adjacence List: [{ 1 2 -3 }, sat = false, unassigned = 3, 
+	{ -1 }, sat = false, unassigned = 1, 
+	{ -2 1 }, sat = false, unassigned = 2]
+]
+
+Variable 2: [OPEN 
+	Adjacence List: [{ 1 2 -3 }, sat = false, unassigned = 3, 
+	{ -2 1 }, sat = false, unassigned = 2, 
+	{ 2 3 -4 }, sat = false, unassigned = 3]
+]
+
+Variable 3: [OPEN 
+	Adjacence List: [{ 1 2 -3 }, sat = false, unassigned = 3, 
+	{ 3 4 }, sat = false, unassigned = 2, 
+	{ 2 3 -4 }, sat = false, unassigned = 3]
+]
+
+Variable 4: [OPEN 
+	Adjacence List: [{ 3 4 }, sat = false, unassigned = 2, 
+	{ 2 3 -4 }, sat = false, unassigned = 3]
+]
+
+
+{ 1 2 -3 }, sat = true, unassigned = 0
+{ 3 4 }, sat = true, unassigned = 0
+{ -1 }, sat = true, unassigned = 0
+{ -2 1 }, sat = true, unassigned = 0
+{ 2 3 -4 }, sat = false, unassigned = 0
+
+
+Variable 1: [FALSE 
+	Adjacence List: [{ 1 2 -3 }, sat = true, unassigned = 0, 
+	{ -1 }, sat = true, unassigned = 0, 
+	{ -2 1 }, sat = true, unassigned = 0]
+]
+
+Variable 2: [FALSE 
+	Adjacence List: [{ 1 2 -3 }, sat = true, unassigned = 0, 
+	{ -2 1 }, sat = true, unassigned = 0, 
+	{ 2 3 -4 }, sat = false, unassigned = 0]
+]
+
+Variable 3: [FALSE 
+	Adjacence List: [{ 1 2 -3 }, sat = true, unassigned = 0, 
+	{ 3 4 }, sat = true, unassigned = 0, 
+	{ 2 3 -4 }, sat = false, unassigned = 0]
+]
+
+Variable 4: [TRUE 
+	Adjacence List: [{ 3 4 }, sat = true, unassigned = 0, 
+	{ 2 3 -4 }, sat = false, unassigned = 0]
+]
+
+
+{ 1 2 -3 }, sat = false, unassigned = 3
+{ 3 4 }, sat = false, unassigned = 2
+{ -1 }, sat = false, unassigned = 1
+{ -2 1 }, sat = false, unassigned = 2
+{ 2 3 -4 }, sat = false, unassigned = 3
+
+
+Variable 1: [OPEN 
+	Adjacence List: [{ 1 2 -3 }, sat = false, unassigned = 3, 
+	{ -1 }, sat = false, unassigned = 1, 
+	{ -2 1 }, sat = false, unassigned = 2]
+]
+
+Variable 2: [OPEN 
+	Adjacence List: [{ 1 2 -3 }, sat = false, unassigned = 3, 
+	{ -2 1 }, sat = false, unassigned = 2, 
+	{ 2 3 -4 }, sat = false, unassigned = 3]
+]
+
+Variable 3: [OPEN 
+	Adjacence List: [{ 1 2 -3 }, sat = false, unassigned = 3, 
+	{ 3 4 }, sat = false, unassigned = 2, 
+	{ 2 3 -4 }, sat = false, unassigned = 3]
+]
+
+Variable 4: [OPEN 
+	Adjacence List: [{ 3 4 }, sat = false, unassigned = 2, 
+	{ 2 3 -4 }, sat = false, unassigned = 3]
+]
+
+
+{ 1 2 -3 }, sat = true, unassigned = 0
+{ 3 4 }, sat = true, unassigned = 0
+{ -1 }, sat = true, unassigned = 0
+{ -2 1 }, sat = true, unassigned = 0
+{ 2 3 -4 }, sat = false, unassigned = 0
+
+
+Variable 1: [FALSE 
+	Adjacence List: [{ 1 2 -3 }, sat = true, unassigned = 0, 
+	{ -1 }, sat = true, unassigned = 0, 
+	{ -2 1 }, sat = true, unassigned = 0]
+]
+
+Variable 2: [FALSE 
+	Adjacence List: [{ 1 2 -3 }, sat = true, unassigned = 0, 
+	{ -2 1 }, sat = true, unassigned = 0, 
+	{ 2 3 -4 }, sat = false, unassigned = 0]
+]
+
+Variable 3: [FALSE 
+	Adjacence List: [{ 1 2 -3 }, sat = true, unassigned = 0, 
+	{ 3 4 }, sat = true, unassigned = 0, 
+	{ 2 3 -4 }, sat = false, unassigned = 0]
+]
+
+Variable 4: [TRUE 
+	Adjacence List: [{ 3 4 }, sat = true, unassigned = 0, 
+	{ 2 3 -4 }, sat = false, unassigned = 0]
+]
+\end{verbatim}
+Wie leicht von Hand nachzuvollziehen ist stimmt die Belegung der Variablen durch UP, die in diesen beiden speziellen Fällen eindeutig durch festgelegt ist. Die erste Formel ist tatsächlich nicht erfüllbar, da alle Variablen durch UP belegt wurden und es einen Konflikt gibt, die zweite Formel ist erfüllbar wie die Ausgabe zeigt.
+\end{document}
