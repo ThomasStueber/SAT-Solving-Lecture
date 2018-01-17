@@ -1,0 +1,72 @@
+\newpage
+\noindent\textbf{Aufgabe 10.3}\\
+Der QBF Algorithmus ist auf folgende Formel anzuwenden:
+\begin{align*}
+\forall x \exists a,b,c \forall y,z:
+\{ 
+\{x,a,y,c\},
+\{x,\neg y, \neg c,b\},
+\{\neg b, \neg x, c\},
+\{\neg c,\neg b, y\},
+\{\neg x,b,z\} \}
+\end{align*}
+Folgende Tabelle entsteht dabei:
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline 
+		Level & Variable & Quantifier & Value & Reason & Clause \\ 
+		\hline 
+		1 & x & $\forall(1)F$ & F & Decision &  \\ 
+		\hline 
+		2 & a & $\exists(2)$ & F & Decision &  \\ 
+		\hline 
+		& c & $\exists(2)$ & T & Reason & $\{x,a,y,c\}$ \\ 
+		\hline 
+		& b & $\exists(2)$ & T & $\{x,\neg y, \neg c,b \}$ &  \\ 
+		\hline 
+		& b & $\exists(2)$ & F & $\{\neg c,\neg b, y\}$ &  \\ 
+		\hline 
+	\end{tabular}
+\end{center}
+Wir erhalten eine neue Klausel:
+\begin{align*}
+\{x,\neg y,\neg c,\textcolor{blue}{b} \} \ast \{\neg c, \textcolor{blue}{\neg b}, y \} &= \{x,\neg y, y, \textcolor{green}{\neg c} \} \ast \{x,a,y,\textcolor{green}{c} \}\\
+&= \underline{\{x,a,\neg y, y\}} = \{x,a\}
+\end{align*}
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline 
+		Level & Variable & Quantifier & Value & Reason & Clause \\ 
+		\hline 
+		1 & x & $\forall(1)F$ & F & Decision &  \\ 
+		\hline 
+		& a & $\exists(2)$ & T & Reason & $\{x,a,\neg y,y\}$ \\ 
+		\hline 
+		2 & b & $\exists(2)$ & F & Decision &  \\ 
+		\hline 
+		& c & $\exists(2)$ & F & Reason & $\{x,\neg y,\neg c,b\}$ \\ 
+		\hline 
+	\end{tabular} 
+\end{center}
+Backtracking zu Level 1:
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline 
+		Level & Variable & Quantifier & Value & Reason & Clause \\ 
+		\hline 
+		1 & x & $\forall(1)F$ & F & Decision &  \\ 
+		\hline 
+		& b & $\exists(2)$ & T & Reason & $\{\neg x,b,z\}$ \\ 
+		\hline 
+		& c & $\exists(2)$ & T & Reason & $\{\neg b, \neg x, c \}$ \\ 
+		\hline 
+		& c & $\exists(2)$ & F & Reason & $\{\neg c,\neg b, y\}$ \\ 
+		\hline 
+	\end{tabular}
+Betrachten wir nun die neue Klausel:
+\begin{align*}
+\{\neg b,\neg x, \textcolor{blue}{c} \} \ast \{\textcolor{blue}{\neg c},\neg b, y \} = \{\textcolor{red}{\neg b}, \neg x, \neg y \} \ast \{\neg x,\textcolor{red}{b}, z \} = \{\neg x,\neg y z \}
+\end{align*}
+Dies ist gleichbedeutend zum Falsum. 
+Somit ist die Formel unerfüllbar.\texttt{ UNSAT}
+\end{center}
